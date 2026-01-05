@@ -219,6 +219,8 @@ uploads/
 *.xlsx
 *.xls
 *.zip
+.env
+
 
 # saída/relatórios:
 output/

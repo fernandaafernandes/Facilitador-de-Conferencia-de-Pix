@@ -1,16 +1,21 @@
-import os
 from flask import Flask
+from dotenv import load_dotenv
+import os
+
+from app.extensions import db
+
+load_dotenv()
 
 def create_app():
     app = Flask(__name__)
-    app.config["SECRET_KEY"] = "segredo"
 
-    # pasta de uploads
-    app.config["UPLOAD_DIR"] = os.path.join(os.getcwd(), "uploads")
-    os.makedirs(app.config["UPLOAD_DIR"], exist_ok=True)
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-    # registra as rotas
-    from app.routes.casaamor import casaamor_bp
-    app.register_blueprint(casaamor_bp)
+    db.init_app(app)
+
+    # 🔽 REGISTRO DAS ROTAS
+    from app.routes.test import test_bp
+    app.register_blueprint(test_bp)
 
     return app
