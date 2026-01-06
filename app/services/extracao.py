@@ -1,8 +1,12 @@
 import re
-import pandas as pd
-import pypdf
 from collections import Counter
+
+import pandas as pd
+from pypdf import PdfReader
+
 from app.utils.normalizacao import limpar_nome
+
+
 
 
 def _safe_text(page) -> str:
@@ -30,7 +34,7 @@ def extrair_sicoob(caminho_pdf: str) -> pd.DataFrame:
 
     Retorna: nome, valor, data_banco
     """
-    reader = pypdf.PdfReader(caminho_pdf)
+    reader = PdfReader(caminho_pdf)
 
     linhas = []
     for p in reader.pages:
