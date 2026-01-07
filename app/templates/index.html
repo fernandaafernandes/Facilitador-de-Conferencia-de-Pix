@@ -11,252 +11,41 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
+    /* Mantenha seus estilos CSS originais aqui */
     :root{
-      --green: #16a34a;
-      --green2:#22c55e;
-      --bg: #f6faf7;
-      --card: #ffffff;
-      --text: #0f172a;
-      --muted:#475569;
-      --border:#e5e7eb;
-      --shadow: 0 10px 28px rgba(2,6,23,.08);
-      --shadow2: 0 18px 45px rgba(2,6,23,.10);
-      --radius: 18px;
-      --radius2: 22px;
+      --green: #16a34a; --green2:#22c55e; --bg: #f6faf7; --card: #ffffff;
+      --text: #0f172a; --muted:#475569; --border:#e5e7eb;
+      --shadow: 0 10px 28px rgba(2,6,23,.08); --shadow2: 0 18px 45px rgba(2,6,23,.10);
+      --radius: 18px; --radius2: 22px;
     }
-
-    body{
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    body::before{
-      content:"";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: -1;
-      background:
-        radial-gradient(900px 420px at 15% 0%, rgba(34,197,94,.20), transparent 55%),
-        radial-gradient(900px 420px at 95% 10%, rgba(22,163,74,.16), transparent 55%),
-        radial-gradient(900px 420px at 50% 120%, rgba(15,23,42,.06), transparent 60%);
-      filter: saturate(1.05);
-    }
-
+    body{ font-family: Inter, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
     .shell{ max-width: 1120px; margin: 0 auto; padding: 28px 16px 34px; }
-
-    .topbar{
-      display:flex; align-items:flex-end; justify-content:space-between;
-      gap:16px; flex-wrap:wrap; margin-bottom: 18px;
-    }
-
-    .badge-brand{
-      display:inline-flex; align-items:center; gap:10px;
-      padding: 9px 12px; border-radius: 999px;
-      background: rgba(34,197,94,.12);
-      border: 1px solid rgba(34,197,94,.25);
-      color: #14532d;
-      font-weight: 900;
-    }
-
-    .dot{
-      width:10px; height:10px; border-radius: 999px;
-      background: var(--green);
-      box-shadow: 0 0 0 6px rgba(34,197,94,.18);
-    }
-
+    .topbar{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom: 18px; }
+    .badge-brand{ display:inline-flex; align-items:center; gap:10px; padding: 9px 12px; border-radius: 999px; background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.25); color: #14532d; font-weight: 900; }
+    .dot{ width:10px; height:10px; border-radius: 999px; background: var(--green); box-shadow: 0 0 0 6px rgba(34,197,94,.18); }
     h1{ font-weight: 900; letter-spacing:-.7px; margin: 10px 0 6px; }
     .subtitle{ color: var(--muted); margin:0; font-weight: 600; max-width: 60ch; }
-
-    .cardx{
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-
-    .cardx-h{
-      padding: 16px 18px;
-      border-bottom: 1px solid var(--border);
-      display:flex; align-items:center; justify-content:space-between;
-      background: linear-gradient(180deg, rgba(34,197,94,.08), rgba(255,255,255,0));
-    }
-
+    .cardx{ background: var(--card); border: 1px solid var(--border); border-radius: var(--radius2); box-shadow: var(--shadow); overflow:hidden; }
+    .cardx-h{ padding: 16px 18px; border-bottom: 1px solid var(--border); display:flex; align-items:center; justify-content:space-between; background: linear-gradient(180deg, rgba(34,197,94,.08), rgba(255,255,255,0)); }
     .cardx-b{ padding: 18px; }
-
     .kpis{ display:flex; gap:10px; flex-wrap:wrap; }
-
-    .chip{
-      padding: 9px 12px;
-      border-radius: 999px;
-      background: #f1f5f9;
-      border: 1px solid #e2e8f0;
-      font-weight: 900;
-      box-shadow: 0 6px 18px rgba(2,6,23,.05);
-    }
+    .chip{ padding: 9px 12px; border-radius: 999px; background: #f1f5f9; border: 1px solid #e2e8f0; font-weight: 900; box-shadow: 0 6px 18px rgba(2,6,23,.05); }
     .chip strong{ color: var(--green); }
-
-    .form-label{ font-weight: 900; }
-    .form-control{
-      border-radius: 16px;
-      padding: 12px;
-      border: 1px solid #d1d5db;
-      background: #fff;
-    }
-    .form-control:focus{
-      border-color: rgba(34,197,94,.55);
-      box-shadow: 0 0 0 6px rgba(34,197,94,.12);
-    }
-
-    .btn-green{
-      border-radius: 16px;
-      padding: 12px 14px;
-      font-weight: 900;
-      background: linear-gradient(180deg, var(--green2), var(--green));
-      border: 0;
-      color: #052e16;
-      box-shadow: 0 10px 22px rgba(34,197,94,.22);
-      position: relative;
-      overflow: hidden;
-    }
-    .btn-green::after{
-      content:"";
-      position:absolute; inset:-40% -20%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.26), transparent);
-      transform: rotate(10deg);
-      animation: shine 3.3s ease-in-out infinite;
-    }
-    @keyframes shine{
-      0%{ transform: translateX(-40%) rotate(10deg); opacity:.0; }
-      20%{ opacity:.55; }
-      50%{ transform: translateX(40%) rotate(10deg); opacity:.0; }
-      100%{ opacity:0; }
-    }
-
-    .alertx{
-      margin-top: 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(239,68,68,.25);
-      background: rgba(239,68,68,.07);
-      color: #7f1d1d;
-      padding: 12px 14px;
-      font-weight: 800;
-    }
-
-    .hint{
-      margin-top: 10px;
-      color: var(--muted);
-      font-weight: 650;
-      font-size: .92rem;
-    }
-    .hint code{
-      background: rgba(15,23,42,.06);
-      border: 1px solid rgba(15,23,42,.08);
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-weight: 900;
-    }
-
-    .table-wrap{
-      border:1px solid var(--border);
-      border-radius: 18px;
-      overflow:hidden;
-      box-shadow: var(--shadow2);
-    }
-
-    table{ margin:0 !important; }
-
-    thead th{
-      background: #f8fafc !important;
-      font-size: .78rem;
-      font-weight: 900;
-      border-bottom: 1px solid var(--border) !important;
-      padding: 14px !important;
-      letter-spacing: .3px;
-    }
-
-    tbody td{
-      padding: 14px !important;
-      border-top: 1px solid #eef2f7 !important;
-      font-weight: 650;
-    }
-
-    tbody tr:hover td{ background: #f0fdf4; }
-
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-weight: 900;
-      font-size: .86rem;
-      white-space: nowrap;
-    }
-    .pill::before{
-      content:"";
-      width:8px; height:8px; border-radius: 999px;
-      background: currentColor;
-      opacity: .75;
-    }
-
-    .pill.ok{
-      background: rgba(34,197,94,.12);
-      border: 1px solid rgba(34,197,94,.22);
-      color: #14532d;
-    }
-
-    .pill.bad{
-      background: rgba(239,68,68,.10);
-      border: 1px solid rgba(239,68,68,.22);
-      color: #7f1d1d;
-    }
-
-    .footer{
-      margin-top: 18px;
-      color: rgba(71,85,105,.95);
-      font-weight: 700;
-      font-size: .92rem;
-      display:flex;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-      padding: 10px 2px 0;
-    }
-    .footer .muted{ color: rgba(71,85,105,.8); font-weight: 650; }
-    .footer a{ color: #14532d; font-weight: 900; text-decoration: none; }
-    .footer a:hover{ text-decoration: underline; }
-
-    
-    .btn-loading{
-      pointer-events:none;
-      opacity:.92;
-    }
-    .spinner{
-      width: 18px; height: 18px;
-      border-radius: 999px;
-      border: 2px solid rgba(5,46,22,.35);
-      border-top-color: rgba(5,46,22,.95);
-      display:inline-block;
-      animation: spin .8s linear infinite;
-      vertical-align: middle;
-      margin-right: 10px;
-    }
+    .btn-green{ border-radius: 16px; padding: 12px 14px; font-weight: 900; background: linear-gradient(180deg, var(--green2), var(--green)); border: 0; color: #052e16; box-shadow: 0 10px 22px rgba(34,197,94,.22); cursor: pointer; }
+    .alertx{ margin-top: 14px; border-radius: 16px; border: 1px solid rgba(239,68,68,.25); background: rgba(239,68,68,.07); color: #7f1d1d; padding: 12px 14px; font-weight: 800; }
+    .table-wrap{ border:1px solid var(--border); border-radius: 18px; overflow:hidden; box-shadow: var(--shadow2); }
+    thead th{ background: #f8fafc !important; font-size: .78rem; font-weight: 900; border-bottom: 1px solid var(--border) !important; padding: 14px !important; }
+    tbody td{ padding: 14px !important; border-top: 1px solid #eef2f7 !important; font-weight: 650; }
+    .pill{ display:inline-flex; align-items:center; gap:8px; padding: 8px 12px; border-radius: 999px; font-weight: 900; font-size: .86rem; }
+    .pill.ok{ background: rgba(34,197,94,.12); color: #14532d; }
+    .pill.bad{ background: rgba(239,68,68,.10); color: #7f1d1d; }
+    .spinner{ width: 18px; height: 18px; border-radius: 999px; border: 2px solid rgba(5,46,22,.35); border-top-color: rgba(5,46,22,.95); display:inline-block; animation: spin .8s linear infinite; margin-right: 10px; }
     @keyframes spin{ to{ transform: rotate(360deg);} }
   </style>
 </head>
 
 <body>
   <div class="shell">
-
-    {#  "dados_ok" funciona para lista OU DataFrame #}
-    {% set dados_ok = (dados is not none) and (dados is not string) and (dados|length > 0) %}
-    {# Se for DataFrame, ele tem atributo "empty". Isso evita o erro do pandas no if. #}
-    {% if dados is not none and dados.empty is defined %}
-      {% set dados_ok = (not dados.empty) %}
-    {% endif %}
 
     <div class="topbar">
       <div>
@@ -265,9 +54,9 @@
         <p class="subtitle">Envie os dois PDFs para cruzar doações do extrato com recibos já emitidos no SGTM.</p>
       </div>
 
-      {% if dados_ok %}
+      {% if dados %}
         {% set total = dados|length %}
-        {% set enviados = (dados|selectattr('situacao', 'equalto', 'RECIBO ENVIADO')|list)|length %}
+        {% set enviados = dados | selectattr('situacao', 'equalto', 'RECIBO ENVIADO') | list | length %}
         {% set pendentes = total - enviados %}
         <div class="kpis">
           <div class="chip">Total: <strong>{{ total }}</strong></div>
@@ -281,11 +70,11 @@
       <div class="cardx-b">
         <form id="formUpload" method="POST" enctype="multipart/form-data" class="row g-3 align-items-end">
           <div class="col-md-5">
-            <label class="form-label">Extrato do Banco (PDF)</label>
+            <label class="form-label fw-bold">Extrato do Banco (PDF)</label>
             <input type="file" name="extrato" class="form-control" required>
           </div>
           <div class="col-md-5">
-            <label class="form-label">Recibos Emitidos (SGTM) (PDF)</label>
+            <label class="form-label fw-bold">Recibos Emitidos (SGTM) (PDF)</label>
             <input type="file" name="sgtm" class="form-control" required>
           </div>
           <div class="col-md-2 d-grid">
@@ -293,22 +82,18 @@
           </div>
         </form>
 
-        <div class="hint">
-          Dica: Gere o extrato no site do banco em formato PDF (período máximo de 30 dias). No SGTM, vá em <code>Recibos » Emitidos » Exportar PDF</code>.
-        </div>
-
         {% if erro %}
           <div class="alertx">{{ erro }}</div>
         {% endif %}
       </div>
     </div>
 
-    {% if dados_ok %}
+    {% if dados %}
       <div class="cardx">
         <div class="cardx-h">
           <h5 class="m-0 fw-bold">Resultado</h5>
-          <div class="muted small fw-semibold" style="color: var(--muted);">
-            Última atualização: {{ now or "—" }}
+          <div class="text-muted small fw-semibold">
+            Gerado em: {{ now if now else "Agora" }}
           </div>
         </div>
 
@@ -325,21 +110,15 @@
               </thead>
               <tbody>
                 {% for item in dados %}
-                  {# suporte pra dict (item['nome']) e objeto (item.nome) #}
-                  {% set nome = item.nome if item.nome is defined else item['nome'] %}
-                  {% set valor = item.valor if item.valor is defined else item['valor'] %}
-                  {% set data = item.data if item.data is defined else item.get('data') %}
-                  {% set situacao = item.situacao if item.situacao is defined else item.get('situacao') %}
-
                   <tr>
-                    <td>{{ nome }}</td>
-                    <td>R$ {{ "%.2f"|format(valor) }}</td>
-                    <td>{{ data or "---" }}</td>
+                    <td>{{ item.nome }}</td>
+                    <td>R$ {{ "%.2f"|format(item.valor|float) }}</td>
+                    <td>{{ item.data or "---" }}</td>
                     <td>
-                      {% if situacao == 'RECIBO ENVIADO' %}
+                      {% if item.situacao == 'RECIBO ENVIADO' %}
                         <span class="pill ok">RECIBO ENVIADO</span>
                       {% else %}
-                        <span class="pill bad">PENDENTE DE ENVIO</span>
+                        <span class="pill bad">PENDENTE</span>
                       {% endif %}
                     </td>
                   </tr>
@@ -347,33 +126,22 @@
               </tbody>
             </table>
           </div>
-
-          <div class="footer">
-            <div>
-              <span class="muted">Sistema de conferência de PIX</span>
-            </div>
-            <div>
-              Desenvolvido por <strong>Fernanda Fernandes</strong> 
-            </div>
-          </div>
         </div>
       </div>
     {% else %}
-      <div class="footer">
-        <div class="muted">Envie os PDFs acima para gerar o relatório.</div>
+      <div class="text-center p-4 text-muted fw-bold">
+        Envie os arquivos para processar a conferência.
       </div>
     {% endif %}
 
   </div>
 
   <script>
-    
     const form = document.getElementById("formUpload");
     const btn = document.getElementById("btnSubmit");
-
     if (form && btn){
       form.addEventListener("submit", () => {
-        btn.classList.add("btn-loading");
+        btn.disabled = true;
         btn.innerHTML = '<span class="spinner"></span>PROCESSANDO...';
       });
     }

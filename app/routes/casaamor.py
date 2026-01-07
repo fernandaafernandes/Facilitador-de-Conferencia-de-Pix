@@ -9,7 +9,7 @@ casaamor_bp = Blueprint("casaamor", __name__)
 
 @casaamor_bp.route("/", methods=["GET", "POST"])
 def home():
-    dados = []
+    dados = []  # Inicializa como lista vazia
     erro = None
 
     if request.method == "POST":
@@ -31,8 +31,17 @@ def home():
         try:
             df_banco = extrair_sicoob(p_extrato)
             df_sgtm = extrair_sgtm(p_sgtm)
-            dados = conciliar(df_banco, df_sgtm)
+            
+            
+            df_resultado = conciliar(df_banco, df_sgtm)
+            
+            # Converte para lista de dicionários
+            if df_resultado is not None and not df_resultado.empty:
+                dados = df_resultado.to_dict(orient='records')
+            else:
+                dados = []
+                
         except Exception as e:
-            erro = str(e)
+            erro = f"Erro no processamento: {str(e)}"
 
     return render_template("index.html", dados=dados, erro=erro)
