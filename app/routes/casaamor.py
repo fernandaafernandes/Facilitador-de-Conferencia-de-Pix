@@ -9,39 +9,33 @@ casaamor_bp = Blueprint("casaamor", __name__)
 
 @casaamor_bp.route("/", methods=["GET", "POST"])
 def home():
-    dados = []  # Inicializa como lista vazia
+    dados_para_template = [] 
     erro = None
 
     if request.method == "POST":
-        extrato = request.files.get("extrato")
-        sgtm = request.files.get("sgtm")
-
-        if not extrato or not sgtm:
-            erro = "Envie os dois PDFs."
-            return render_template("index.html", dados=[], erro=erro)
-
-        pasta = current_app.config["UPLOAD_DIR"]
-
-        p_extrato = os.path.join(pasta, secure_filename(extrato.filename))
-        p_sgtm = os.path.join(pasta, secure_filename(sgtm.filename))
-
-        extrato.save(p_extrato)
-        sgtm.save(p_sgtm)
-
         try:
+            extrato = request.files.get("extrato")
+            sgtm = request.files.get("sgtm")
+
+            if not extrato or not sgtm:
+                return render_template("index.html", dados=[], erro="Envie os dois PDFs.")
+
+            pasta = "/tmp" 
+            p_extrato = os.path.join(pasta, secure_filename(extrato.filename))
+            p_sgtm = os.path.join(pasta, secure_filename(sgtm.filename))
+
+            extrato.save(p_extrato)
+            sgtm.save(p_sgtm)
+
             df_banco = extrair_sicoob(p_extrato)
             df_sgtm = extrair_sgtm(p_sgtm)
-            
-            
             df_resultado = conciliar(df_banco, df_sgtm)
             
-            # Converte para lista de dicionários
-            if df_resultado is not None and not df_resultado.empty:
-                dados = df_resultado.to_dict(orient='records')
-            else:
-                dados = []
-                
+            if df_resultado is not None and hasattr(df_resultado, 'to_dict'):
+                dados_para_template = df_resultado.to_dict(orient='records')
+            
         except Exception as e:
             erro = f"Erro no processamento: {str(e)}"
+            dados_para_template = []
 
-    return render_template("index.html", dados=dados, erro=erro)
+    return render_template("index.html", dados=dados_para_template, erro=erro)

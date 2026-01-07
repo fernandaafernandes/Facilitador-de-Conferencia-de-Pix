@@ -11,36 +11,41 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    /* Mantenha seus estilos CSS originais aqui */
-    :root{
+    :root {
       --green: #16a34a; --green2:#22c55e; --bg: #f6faf7; --card: #ffffff;
       --text: #0f172a; --muted:#475569; --border:#e5e7eb;
       --shadow: 0 10px 28px rgba(2,6,23,.08); --shadow2: 0 18px 45px rgba(2,6,23,.10);
       --radius: 18px; --radius2: 22px;
     }
-    body{ font-family: Inter, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-    .shell{ max-width: 1120px; margin: 0 auto; padding: 28px 16px 34px; }
-    .topbar{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom: 18px; }
-    .badge-brand{ display:inline-flex; align-items:center; gap:10px; padding: 9px 12px; border-radius: 999px; background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.25); color: #14532d; font-weight: 900; }
-    .dot{ width:10px; height:10px; border-radius: 999px; background: var(--green); box-shadow: 0 0 0 6px rgba(34,197,94,.18); }
-    h1{ font-weight: 900; letter-spacing:-.7px; margin: 10px 0 6px; }
-    .subtitle{ color: var(--muted); margin:0; font-weight: 600; max-width: 60ch; }
-    .cardx{ background: var(--card); border: 1px solid var(--border); border-radius: var(--radius2); box-shadow: var(--shadow); overflow:hidden; }
-    .cardx-h{ padding: 16px 18px; border-bottom: 1px solid var(--border); display:flex; align-items:center; justify-content:space-between; background: linear-gradient(180deg, rgba(34,197,94,.08), rgba(255,255,255,0)); }
-    .cardx-b{ padding: 18px; }
-    .kpis{ display:flex; gap:10px; flex-wrap:wrap; }
-    .chip{ padding: 9px 12px; border-radius: 999px; background: #f1f5f9; border: 1px solid #e2e8f0; font-weight: 900; box-shadow: 0 6px 18px rgba(2,6,23,.05); }
-    .chip strong{ color: var(--green); }
-    .btn-green{ border-radius: 16px; padding: 12px 14px; font-weight: 900; background: linear-gradient(180deg, var(--green2), var(--green)); border: 0; color: #052e16; box-shadow: 0 10px 22px rgba(34,197,94,.22); cursor: pointer; }
-    .alertx{ margin-top: 14px; border-radius: 16px; border: 1px solid rgba(239,68,68,.25); background: rgba(239,68,68,.07); color: #7f1d1d; padding: 12px 14px; font-weight: 800; }
-    .table-wrap{ border:1px solid var(--border); border-radius: 18px; overflow:hidden; box-shadow: var(--shadow2); }
-    thead th{ background: #f8fafc !important; font-size: .78rem; font-weight: 900; border-bottom: 1px solid var(--border) !important; padding: 14px !important; }
-    tbody td{ padding: 14px !important; border-top: 1px solid #eef2f7 !important; font-weight: 650; }
-    .pill{ display:inline-flex; align-items:center; gap:8px; padding: 8px 12px; border-radius: 999px; font-weight: 900; font-size: .86rem; }
-    .pill.ok{ background: rgba(34,197,94,.12); color: #14532d; }
-    .pill.bad{ background: rgba(239,68,68,.10); color: #7f1d1d; }
-    .spinner{ width: 18px; height: 18px; border-radius: 999px; border: 2px solid rgba(5,46,22,.35); border-top-color: rgba(5,46,22,.95); display:inline-block; animation: spin .8s linear infinite; margin-right: 10px; }
-    @keyframes spin{ to{ transform: rotate(360deg);} }
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background: var(--bg); 
+      color: var(--text); 
+      min-height: 100vh; 
+    }
+    .shell { max-width: 1120px; margin: 0 auto; padding: 28px 16px 34px; }
+    .topbar { display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom: 18px; }
+    .badge-brand { display:inline-flex; align-items:center; gap:10px; padding: 9px 12px; border-radius: 999px; background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.25); color: #14532d; font-weight: 900; }
+    .dot { width:10px; height:10px; border-radius: 999px; background: var(--green); box-shadow: 0 0 0 6px rgba(34,197,94,.18); }
+    h1 { font-weight: 900; letter-spacing:-.7px; margin: 10px 0 6px; }
+    .subtitle { color: var(--muted); margin:0; font-weight: 600; max-width: 60ch; }
+    .cardx { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius2); box-shadow: var(--shadow); overflow:hidden; }
+    .cardx-h { padding: 16px 18px; border-bottom: 1px solid var(--border); display:flex; align-items:center; justify-content:space-between; background: linear-gradient(180deg, rgba(34,197,94,.08), rgba(255,255,255,0)); }
+    .cardx-b { padding: 18px; }
+    .kpis { display:flex; gap:10px; flex-wrap:wrap; }
+    .chip { padding: 9px 12px; border-radius: 999px; background: #f1f5f9; border: 1px solid #e2e8f0; font-weight: 900; }
+    .chip strong { color: var(--green); }
+    .btn-green { border-radius: 16px; padding: 12px 14px; font-weight: 900; background: linear-gradient(180deg, var(--green2), var(--green)); border: 0; color: #052e16; box-shadow: 0 10px 22px rgba(34,197,94,.22); cursor: pointer; transition: all 0.2s; }
+    .btn-green:disabled { opacity: 0.7; cursor: not-allowed; }
+    .alertx { margin-top: 14px; border-radius: 16px; border: 1px solid rgba(239,68,68,.25); background: rgba(239,68,68,.07); color: #7f1d1d; padding: 12px 14px; font-weight: 800; }
+    .table-wrap { border:1px solid var(--border); border-radius: 18px; overflow:hidden; box-shadow: var(--shadow2); }
+    thead th { background: #f8fafc !important; font-size: .78rem; font-weight: 900; border-bottom: 1px solid var(--border) !important; padding: 14px !important; }
+    tbody td { padding: 14px !important; border-top: 1px solid #eef2f7 !important; font-weight: 650; }
+    .pill { display:inline-flex; align-items:center; gap:8px; padding: 8px 12px; border-radius: 999px; font-weight: 900; font-size: .86rem; }
+    .pill.ok { background: rgba(34,197,94,.12); color: #14532d; border: 1px solid rgba(34,197,94,.2); }
+    .pill.bad { background: rgba(239,68,68,.10); color: #7f1d1d; border: 1px solid rgba(239,68,68,.2); }
+    .spinner { width: 18px; height: 18px; border-radius: 999px; border: 2px solid rgba(5,46,22,.35); border-top-color: #052e16; display:inline-block; animation: spin .8s linear infinite; margin-right: 10px; vertical-align: middle; }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 
@@ -54,7 +59,8 @@
         <p class="subtitle">Envie os dois PDFs para cruzar doações do extrato com recibos já emitidos no SGTM.</p>
       </div>
 
-      {% if dados %}
+      
+      {% if dados and dados is iterable and dados|length > 0 %}
         {% set total = dados|length %}
         {% set enviados = dados | selectattr('situacao', 'equalto', 'RECIBO ENVIADO') | list | length %}
         {% set pendentes = total - enviados %}
@@ -88,12 +94,12 @@
       </div>
     </div>
 
-    {% if dados %}
+    {% if dados and dados is iterable and dados|length > 0 %}
       <div class="cardx">
         <div class="cardx-h">
-          <h5 class="m-0 fw-bold">Resultado</h5>
+          <h5 class="m-0 fw-bold">Resultado da Conciliação</h5>
           <div class="text-muted small fw-semibold">
-            Gerado em: {{ now if now else "Agora" }}
+            Status: Processado com sucesso
           </div>
         </div>
 
@@ -102,10 +108,10 @@
             <table class="table table-borderless align-middle">
               <thead>
                 <tr>
-                  <th style="width:52%;">NOME</th>
-                  <th style="width:16%;">VALOR</th>
-                  <th style="width:16%;">DATA</th>
-                  <th style="width:16%;">SITUAÇÃO</th>
+                  <th style="width:50%;">NOME</th>
+                  <th style="width:15%;">VALOR</th>
+                  <th style="width:15%;">DATA</th>
+                  <th style="width:20%;">SITUAÇÃO</th>
                 </tr>
               </thead>
               <tbody>
@@ -129,9 +135,12 @@
         </div>
       </div>
     {% else %}
-      <div class="text-center p-4 text-muted fw-bold">
-        Envie os arquivos para processar a conferência.
+      {% if not erro %}
+      <div class="text-center p-5 text-muted">
+        <p class="fw-bold">Nenhum dado processado ainda.</p>
+        <span>Selecione os arquivos PDF acima e clique em "Conferir".</span>
       </div>
+      {% endif %}
     {% endif %}
 
   </div>
@@ -139,7 +148,8 @@
   <script>
     const form = document.getElementById("formUpload");
     const btn = document.getElementById("btnSubmit");
-    if (form && btn){
+    
+    if (form && btn) {
       form.addEventListener("submit", () => {
         btn.disabled = true;
         btn.innerHTML = '<span class="spinner"></span>PROCESSANDO...';
