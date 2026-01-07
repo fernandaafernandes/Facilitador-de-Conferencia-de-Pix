@@ -1,4 +1,4 @@
-# Conferência de Doações PIX  – Extrato x SGTM
+# Conferência de PIX  – Extrato x SGTM
 
 Projeto web para automatizar a conferência de doações via PIX comparando:
 - **Extrato bancário (PDF)**
