@@ -7,8 +7,8 @@ from app.services.conciliacao import conciliar
 
 casaamor_bp = Blueprint("casaamor", __name__)
 
-@casaamor_bp.route("/casaamor", methods=["GET", "POST"])
-def casaamor():
+@casaamor_bp.route("/", methods=["GET", "POST"])
+def home():
     dados = []
     erro = None
 
@@ -20,11 +20,10 @@ def casaamor():
             erro = "Envie os dois PDFs."
             return render_template("index.html", dados=[], erro=erro)
 
-        pasta = current_app.config.get("UPLOAD_DIR", "uploads")
-        os.makedirs(pasta, exist_ok=True)
+        pasta = current_app.config["UPLOAD_DIR"]
 
-        p_extrato = os.path.join(pasta, secure_filename(extrato.filename or "extrato.pdf"))
-        p_sgtm = os.path.join(pasta, secure_filename(sgtm.filename or "sgtm.pdf"))
+        p_extrato = os.path.join(pasta, secure_filename(extrato.filename))
+        p_sgtm = os.path.join(pasta, secure_filename(sgtm.filename))
 
         extrato.save(p_extrato)
         sgtm.save(p_sgtm)
@@ -32,11 +31,8 @@ def casaamor():
         try:
             df_banco = extrair_sicoob(p_extrato)
             df_sgtm = extrair_sgtm(p_sgtm)
-
-            df_final = conciliar(df_banco, df_sgtm)
-
-            dados = df_final.to_dict(orient="records")
+            dados = conciliar(df_banco, df_sgtm)
         except Exception as e:
-            erro = f"Erro ao processar os PDFs: {e}"
+            erro = str(e)
 
     return render_template("index.html", dados=dados, erro=erro)

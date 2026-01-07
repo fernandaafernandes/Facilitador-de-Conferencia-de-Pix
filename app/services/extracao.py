@@ -1,3 +1,5 @@
+# app/services/extracao.py
+
 import re
 from collections import Counter
 
@@ -7,15 +9,15 @@ from pypdf import PdfReader
 from app.utils.normalizacao import limpar_nome
 
 
-
-
 def _safe_text(page) -> str:
+    """Evita None quando o PDF vem com página vazia/quebrada."""
     return page.extract_text() or ""
 
 
 def _infer_ano_do_pdf(texto: str) -> str:
-    """ 
+    """
     Se tiver vários anos, pega o mais frequente.
+    Se não tiver nenhum, usa fallback.
     """
     anos = re.findall(r"\b(20\d{2})\b", texto)
     if not anos:
@@ -32,7 +34,7 @@ def extrair_sicoob(caminho_pdf: str) -> pd.DataFrame:
         * se tiver só dd/mm, usa ano inferido do próprio PDF
     - pega nome nas próximas linhas após o lançamento
 
-    Retorna: nome, valor, data_banco
+    Retorna DataFrame: nome, valor, data_banco
     """
     reader = PdfReader(caminho_pdf)
 
@@ -61,15 +63,13 @@ def extrair_sicoob(caminho_pdf: str) -> pd.DataFrame:
     )
 
     def parece_pix_recebido(linha_upper: str) -> bool:
-        # precisa falar de PIX
         if "PIX" not in linha_upper:
             return False
-        # e precisa parecer recebimento (variações)
         return any(t in linha_upper for t in ["RECEB", "RECEBIDO", "RECEBIMENTO"])
 
     dados = []
-
     i = 0
+
     while i < len(linhas):
         linha = linhas[i].strip()
         up = linha.upper()
@@ -113,7 +113,7 @@ def extrair_sicoob(caminho_pdf: str) -> pd.DataFrame:
             cand = limpar_nome(linhas[j])
             if not cand:
                 continue
-            # ignora rótulo comum
+            # ignora rótulos comuns
             if "RECEBIMENTO" in cand and "PIX" in cand:
                 continue
             if len(cand.split()) >= 2:
@@ -123,7 +123,12 @@ def extrair_sicoob(caminho_pdf: str) -> pd.DataFrame:
         if not nome:
             nome = "DESCONHECIDO"
 
-        dados.append({"nome": nome, "valor": round(valor, 2), "data_banco": data_banco})
+        dados.append({
+            "nome": nome,
+            "valor": round(valor, 2),
+            "data_banco": data_banco
+        })
+
         i += 1
 
     df = pd.DataFrame(dados)
@@ -137,18 +142,14 @@ def extrair_sicoob(caminho_pdf: str) -> pd.DataFrame:
 
 def extrair_sgtm(caminho_pdf: str) -> pd.DataFrame:
     """
-    SGTM (PDF real às vezes vem colado):
-      485547LUIZA HELENA ... 40,00 30/12/2025 ... A-536886
-
-    Estratégia robusta:
       - pega código no início (dígitos)
       - acha o PRIMEIRO valor monetário
       - nome = tudo entre código e valor
       - data_sgtm = última data dd/mm/aaaa encontrada após o valor
 
-    Retorna: nome_sis, valor_sis, data_sgtm
+    Retorna DataFrame: nome_sis, valor_sis, data_sgtm
     """
-    reader = pypdf.PdfReader(caminho_pdf)
+    reader = PdfReader(caminho_pdf)
     texto = "\n".join(_safe_text(p) for p in reader.pages)
 
     dados = []
@@ -157,11 +158,12 @@ def extrair_sgtm(caminho_pdf: str) -> pd.DataFrame:
         ln = ln.strip()
         if not ln:
             continue
+
         low = ln.lower()
         if low.startswith("código") or low.startswith("codigo"):
             continue
 
-        # código no início (pode estar colado no nome)
+        # código no início 
         m_code = re.match(r"^(\d+)\s*(.*)$", ln)
         if not m_code:
             continue
@@ -180,7 +182,7 @@ def extrair_sgtm(caminho_pdf: str) -> pd.DataFrame:
         if not nome:
             continue
 
-        # datas depois do valor: pega a última (geralmente a baixa)
+        # datas depois do valor
         datas = re.findall(r"\d{2}/\d{2}/\d{4}", resto[m_val.end():])
         data_sgtm = datas[-1] if datas else None
 
